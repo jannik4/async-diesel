@@ -7,7 +7,7 @@ use diesel::{
         methods::{ExecuteDsl, LimitDsl, LoadQuery},
         RunQueryDsl,
     },
-    r2d2::{ConnectionManager, Pool},
+    r2d2::{self, ConnectionManager, Pool},
     result::QueryResult,
     Connection,
 };
@@ -18,7 +18,7 @@ pub type AsyncResult<R> = Result<R, AsyncError>;
 #[derive(Debug)]
 pub enum AsyncError {
     // Failed to checkout a connection
-    Checkout(r2d2::Error),
+    Checkout(r2d2::PoolError),
 
     // The query failed in some way
     Error(diesel::result::Error),
