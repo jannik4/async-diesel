@@ -11,8 +11,8 @@ use uuid::Uuid;
 
 // Schema
 table! {
-    users (id) {
-        id -> Uuid,
+    users {
+        id -> VarChar,
     }
 }
 
@@ -26,7 +26,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     // Add
     println!("add a user");
     diesel::insert_into(users::table)
-        .values(users::id.eq(Uuid::new_v4()))
+        .values(users::id.eq(Uuid::new_v4().to_string()))
         .execute_async(&pool)
         .await?;
 
